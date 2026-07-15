@@ -11,14 +11,14 @@ dnf do \
 mkdir -p /usr/lib/dracut/dracut.conf.d/
 printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf"
 
-# Temporarily patch /etc/os-release to avoid the initramfs depending on the
+# Temporarily patch /usr/lib/os-release to avoid the initramfs depending on the
 # version number (which changes daily).
 tmp_release_file=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
-cp /etc/os-release "${tmp_release_file}"
-sed -Ei --follow-symlinks -e '/^(OSTREE_)?VERSION=/d' /etc/os-release
+cp /usr/lib/os-release "${tmp_release_file}"
+sed -Ei -e '/^(OSTREE_)?VERSION=/d' /usr/lib/os-release
 
 dracut -v --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
 
-cp "${tmp_release_file}" /etc/os-release
+cp "${tmp_release_file}" /usr/lib/os-release
 rm "${tmp_release_file}"
 
