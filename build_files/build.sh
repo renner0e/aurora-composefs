@@ -5,8 +5,7 @@ set -ouex pipefail
 cp -avf "/ctx/system_files"/. /
 
 dnf do \
-  --action install -y systemd-boot-unsigned \
-  --action upgrade -y --enablerepo=updates-testing --refresh bootc
+  --action install -y systemd-boot-unsigned
 
 mkdir -p /usr/lib/dracut/dracut.conf.d/
 printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf"
