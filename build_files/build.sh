@@ -4,6 +4,9 @@ set -ouex pipefail
 
 cp -avf "/ctx/system_files"/. /
 
+cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
+dnf config-manager setopt keepcache=1 timeout=60
+
 dnf do \
   --action install -y systemd-boot-unsigned \
   --action upgrade -y --enablerepo=updates-testing --refresh bootc
@@ -34,3 +37,4 @@ for file in rpmdb.sqlite rpmdb.sqlite-shm rpmdb.sqlite-wal; do
     fi
 done
 
+mv /etc/dnf/dnf.conf.bak /etc/dnf/dnf.conf
