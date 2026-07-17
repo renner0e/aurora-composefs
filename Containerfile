@@ -4,7 +4,7 @@ COPY build_files /
 COPY system_files /system_files
 
 # Base Image
-FROM ghcr.io/ublue-os/aurora:testing@sha256:86e1c12a70b944f1621f910b86b95dabad2d6c9f525554217bd4f0605e82cf85
+FROM ghcr.io/ublue-os/aurora:testing
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:testing
 # FROM ghcr.io/ublue-os/aurora:stable
