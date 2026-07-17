@@ -22,7 +22,8 @@ sed -Ei -e '/^((OSTREE_)?(IMAGE_)?VERSION|PRETTY_NAME|BUILD_ID)=/d' /usr/lib/os-
 export DRACUT_NO_XATTR=1
 dracut -v --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
 
-mv "${TMP_OS_RELEASE}" /usr/lib/os-release
+cp "${TMP_OS_RELEASE}" /usr/lib/os-release
+rm "${TMP_OS_RELEASE}"
 
 # Relink rpm-ostree-base-db to rpmdb to ensure it correctly reflects the system
 # image's rpmdb and doesn't carry over package info from the base image.
