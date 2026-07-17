@@ -11,17 +11,15 @@ dnf do \
 mkdir -p /usr/lib/dracut/dracut.conf.d/
 printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf"
 
-# Temporarily patch /usr/lib/os-release to avoid the initramfs depending on the
-# version number (which changes daily).
-tmp_release_file=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
-cp /usr/lib/os-release "${tmp_release_file}"
-sed -Ei -e '/^(OSTREE_)?VERSION=/d' /usr/lib/os-release
+# https://github.com/ublue-os/aurora/issues/2568
+TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
+cp /usr/lib/os-release "${TMP_OS_RELEASE}"
+sed -Ei -e '/^((OSTREE_)?(IMAGE_)?VERSION|PRETTY_NAME|BUILD_ID)=/d' /usr/lib/os-release
 
 export DRACUT_NO_XATTR=1
 dracut -v --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
 
-cp "${tmp_release_file}" /usr/lib/os-release
-rm "${tmp_release_file}"
+mv "${TMP_OS_RELEASE}" /usr/lib/os-release
 
 # Relink rpm-ostree-base-db to rpmdb to ensure it correctly reflects the system
 # image's rpmdb and doesn't carry over package info from the base image.
