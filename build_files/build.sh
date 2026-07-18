@@ -4,23 +4,24 @@ set -ouex pipefail
 
 cp -avf "/ctx/system_files"/. /
 
+cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
+dnf config-manager setopt keepcache=1 timeout=60
+
 dnf do \
   --action install -y systemd-boot-unsigned
 
-mkdir -p /usr/lib/dracut/dracut.conf.d/
-printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf"
+# https://github.com/ublue-os/aurora/issues/2568
+TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
+cp /usr/lib/os-release "${TMP_OS_RELEASE}"
+sed -Ei -e '/^((OSTREE_)?(IMAGE_)?VERSION|PRETTY_NAME|BUILD_ID)=/d' /usr/lib/os-release
 
-# Temporarily patch /usr/lib/os-release to avoid the initramfs depending on the
-# version number (which changes daily).
-tmp_release_file=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
-cp /usr/lib/os-release "${tmp_release_file}"
-sed -Ei -e '/^(OSTREE_)?VERSION=/d' /usr/lib/os-release
+DRACUT_NO_XATTR=1 /usr/bin/dracut \
+  --verbose \
+  --force \
+  "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
 
-export DRACUT_NO_XATTR=1
-dracut -v --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
-
-cp "${tmp_release_file}" /usr/lib/os-release
-rm "${tmp_release_file}"
+cp "${TMP_OS_RELEASE}" /usr/lib/os-release
+rm "${TMP_OS_RELEASE}"
 
 # Relink rpm-ostree-base-db to rpmdb to ensure it correctly reflects the system
 # image's rpmdb and doesn't carry over package info from the base image.
@@ -35,3 +36,4 @@ for file in rpmdb.sqlite rpmdb.sqlite-shm rpmdb.sqlite-wal; do
     fi
 done
 
+mv /etc/dnf/dnf.conf.bak /etc/dnf/dnf.conf
