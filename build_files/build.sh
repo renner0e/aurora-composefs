@@ -11,16 +11,15 @@ dnf do \
   --action install -y systemd-boot-unsigned \
   --action upgrade -y --enablerepo=updates-testing --refresh bootc
 
-mkdir -p /usr/lib/dracut/dracut.conf.d/
-printf 'reproducible=yes\nhostonly=no\ncompress=zstd\nadd_dracutmodules+=" bootc "' | tee "/usr/lib/dracut/dracut.conf.d/30-bootcrew-bootc-container-build.conf"
-
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
 cp /usr/lib/os-release "${TMP_OS_RELEASE}"
 sed -Ei -e '/^((OSTREE_)?(IMAGE_)?VERSION|PRETTY_NAME|BUILD_ID)=/d' /usr/lib/os-release
 
-export DRACUT_NO_XATTR=1
-dracut -v --force "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
+DRACUT_NO_XATTR=1 /usr/bin/dracut \
+  --verbose \
+  --force \
+  "$(find /usr/lib/modules -maxdepth 1 -type d | grep -v -E "*.img" | tail -n 1)/initramfs.img"
 
 cp "${TMP_OS_RELEASE}" /usr/lib/os-release
 rm "${TMP_OS_RELEASE}"
