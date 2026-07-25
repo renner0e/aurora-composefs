@@ -9,7 +9,8 @@ dnf config-manager setopt keepcache=1 timeout=60
 
 dnf do \
   --action install -y systemd-boot-unsigned \
-  --action remove -y {kmod-,}v4l2loopback
+  --action remove -y {kmod-,}v4l2loopback \
+  --action upgrade -y --enablerepo=updates-testing --refresh bootc
 
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
