@@ -95,14 +95,19 @@ Actually partition the disk:
 THIS COMMAND MAY BLOW AWAY YOUR DATA
 
 ```
-systemd-repart --empty=force --definitions=repart.d $DISK --dry-run=no --discard=no
+systemd-repart --empty=force --definitions=repart.d/ostree-grub $DISK --dry-run=no --discard=no
 ```
 
 ## Mount created partitions
 
-mount /dev/sdX3 /mnt
+Example:
+
+```
+mount /dev/sdc3 /mnt/
 mkdir -p /mnt/boot
-mount /dev/sdX2 /mnt/boot
+mount /dev/sdc2 /mnt/boot/
+mkdir -p /mnt/boot/efi
+```
 
 ## Blast to disk
 
@@ -117,4 +122,32 @@ podman run --rm --privileged --pid=host --ipc=host \
     --source-imgref=containers-storage:$IMAGE \
     --bootloader=grub --skip-finalize \
     /run/host/mnt/
+```
+
+## Unmount
+
+umount -l -R /mnt
+
+
+## User creation
+
+Hammer into Esc key to get into grub
+
+Press E on the top entry add `init=/bin/bash` to the line that begins with linux
+
+
+do bazzite docs thing
+
+set password for root user
+
+boot system normally
+
+login to root user with password
+
+```
+useradd -m username
+```
+
+```
+usermod -aG wheel username
 ```
