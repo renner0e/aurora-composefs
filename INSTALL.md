@@ -26,6 +26,7 @@ A couple examples:
 - Creating Users and logging in to the installed system is not handled (solved by plasma-setup/gnome-initial-setup)
 - Flatpaks are not preinstalled (they are/should not be on the container image)
 - Enrolling secureboot keys
+- some special partitioning like BTRFS subvolumes (see repart.d)
 
 So anything pretty much that is traditionally done as a "post-install script" on ISOs.
 
@@ -133,21 +134,38 @@ umount -l -R /mnt
 
 Hammer into Esc key to get into grub
 
-Press E on the top entry add `init=/bin/bash` to the line that begins with linux
+Press E on the top entry add and `init=/bin/bash` to the line that begins with linux
 
+### SELinux shenanigans
 
-do bazzite docs thing
+```
+mount -t selinuxfs selinuxfs /sys/fs/selinux
+```
 
-set password for root user
+```
+/sbin/load_policy
+```
 
-boot system normally
+### Making a root user for initial setup 
 
-login to root user with password
+```
+passwd root
+```
+
+Now boot the system normally without
+
+login to root user with your password you set
+
+Now we actually create the user account
 
 ```
 useradd -m username
 ```
 
+Give it sudo privileges
+
 ```
 usermod -aG wheel username
 ```
+
+
