@@ -27,6 +27,7 @@ A couple examples:
 - Flatpaks are not preinstalled (they are/should not be on the container image)
 - Enrolling secureboot keys
 - some special partitioning like BTRFS subvolumes (see repart.d)
+- kernel arguments see https://bootc.dev/bootc/building/kernel-arguments.html
 
 So anything pretty much that is traditionally done as a "post-install script" on ISOs.
 
