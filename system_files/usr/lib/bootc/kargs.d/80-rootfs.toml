@@ -1,0 +1,2 @@
+# workaround for https://discussion.fedoraproject.org/t/root-mount-options-are-ignored-in-fedora-atomic-desktops-42-and-later/148562
+kargs = ["rootflags=compress=zstd:1"]
