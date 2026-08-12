@@ -2,12 +2,12 @@ FROM ghcr.io/ublue-os/aurora:testing AS base
 
 FROM base AS builder
 
-RUN --mount=type=cache,dst=/var/cache/libdnf5 \
-  dnf config-manager setopt keepcache=1 && \
-  dnf -y builddep bootc && \
-  dnf -y install sccache
-
-RUN mkdir -p /var/cache/sccache
+RUN --mount=type=cache,dst=/var/cache/libdnf5 <<EOF
+dnf config-manager setopt keepcache=1
+dnf -y builddep bootc
+dnf -y install sccache
+mkdir -p /var/cache/sccache
+EOF
 
 ENV CARGO_HOME=/var/cache/rust \
   RUSTUP_HOME=/var/cache/rust \
@@ -16,13 +16,17 @@ ENV CARGO_HOME=/var/cache/rust \
   CARGO_INCREMENTAL=0
 WORKDIR /home/build
 
-RUN git clone "https://github.com/bootc-dev/bootc.git" . && git checkout bb8fb41e39cbb8c68b6e602307854a57b58f693a
+RUN git clone "https://github.com/bootc-dev/bootc.git" .
+# RUN git clone "https://github.com/bootc-dev/bootc.git" . && git checkout bb8fb41e39cbb8c68b6e602307854a57b58f693a
 
 RUN --mount=type=cache,dst=/var/cache/sccache \
   --mount=type=cache,dst=/var/cache/rust/registry \
   --mount=type=cache,dst=/var/cache/rust/git \
-  make bin install-all DESTDIR=/output && \
-  sccache --show-stats
+  --mount=type=cache,dst=/home/build/target \
+<<EOF
+/bin/time -f '%E %C' make bin install-all DESTDIR=/output && \
+sccache --show-stats
+EOF
 
 FROM scratch AS ctx
 COPY build_files /
