@@ -79,7 +79,7 @@ jobs:
       - name: Build Image
         id: build-image
         run: |
-          sudo $(command -v just) build \
+          just build \
             ${IMAGE_NAME} \
             ${DEFAULT_TAG}
 
@@ -87,7 +87,7 @@ jobs:
       - name: Hack around permission issue caching
         if: github.event_name != 'pull_request'
         run: |
-          sudo chmod 777 --recursive /var/tmp/buildah-cache-0
+          chmod 777 --recursive /var/tmp/buildah-cache-${UID}
 
       - name: Write new cache
         if: github.event_name != 'pull_request'
@@ -102,7 +102,7 @@ jobs:
       - name: Rechunk with Chunkah
         id: rechunk
         run: |
-          sudo $(command -v just) rechunk \
+          just rechunk \
             ${IMAGE_NAME} \
             ${DEFAULT_TAG}
 
@@ -122,7 +122,7 @@ jobs:
         env:
           ALIAS_TAGS: ${{ steps.gen-build-tags.outputs.alias_tags }}
         run: |
-          sudo $(command -v just) tag-images \
+          just tag-images \
             "${IMAGE_NAME}" \
             "${DEFAULT_TAG}" \
             "${ALIAS_TAGS}"
@@ -135,7 +135,7 @@ jobs:
           REGISTRY: "ghcr.io"
         run: |
           echo "${GITHUB_TOKEN}" | docker login "${REGISTRY}" -u "${GITHUB_ACTOR}" --password-stdin # cosign
-          echo "${GITHUB_TOKEN}" | sudo podman login "${REGISTRY}" -u "${GITHUB_ACTOR}" --password-stdin
+          echo "${GITHUB_TOKEN}" | podman login "${REGISTRY}" -u "${GITHUB_ACTOR}" --password-stdin
 
       - name: Push To GHCR
         if: github.event_name != 'pull_request'
@@ -145,8 +145,8 @@ jobs:
         run: |
           set -euox pipefail
           for tag in ${ALIAS_TAGS}; do
-            sudo podman push --digestfile=/tmp/digestfile --compression-format=zstd ${IMAGE_NAME}:${tag} ${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}
-            sudo podman push --digestfile=/tmp/digestfile --compression-format=zstd ${IMAGE_NAME}:${tag} ${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}
+            podman push --digestfile=/tmp/digestfile --compression-format=zstd ${IMAGE_NAME}:${tag} ${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}
+            podman push --digestfile=/tmp/digestfile --compression-format=zstd ${IMAGE_NAME}:${tag} ${IMAGE_REGISTRY}/${IMAGE_NAME}:${tag}
           done
 
           digest=$(< /tmp/digestfile)
