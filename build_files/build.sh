@@ -11,6 +11,11 @@ dnf do \
   --action install -y systemd-boot-unsigned \
   --action remove -y {kmod-,}v4l2loopback
 
+
+dnf -y copr enable rhcontainerbot/bootc
+dnf -y copr disable rhcontainerbot/bootc
+dnf -y swap --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc bootc
+
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
 cp /usr/lib/os-release "${TMP_OS_RELEASE}"
