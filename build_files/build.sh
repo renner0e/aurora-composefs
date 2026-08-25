@@ -14,7 +14,7 @@ dnf do \
 dnf -y copr enable egoode/dnf-rebuild
 dnf -y copr disable egoode/dnf-rebuild
 dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
-dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild
+dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild 'dnf5-command(manifest)'
 
 dnf -y copr enable rhcontainerbot/bootc
 dnf -y copr disable rhcontainerbot/bootc
