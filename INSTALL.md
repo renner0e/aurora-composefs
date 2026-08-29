@@ -14,7 +14,7 @@
 - Experience with commandline/bash + dealing with containers/podman
 - an image you already built and published on a container registry/or have in containers-storage
 - a spare disk you can **fully** use (no dual-boot!!!) for the installed target system
-- rootfull podman and systemd (that you may read this on right now)
+- rootfull podman and systemd (a system that you may read this on right now)
 
 If you decide to do it over the "liveiso route". You need one USB flash drive for the installation medium, i.e. where you flash Aurora/Bazzite/CoreOS ISO to, anything will do that you are comfortable navigating as long as it has podman and systemd.
 
