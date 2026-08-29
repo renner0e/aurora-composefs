@@ -24,12 +24,12 @@ This way of installing systems with `bootc install` has some UX papercuts.
 A couple examples:
 
 - Creating Users and logging in to the installed system is not handled (solved by plasma-setup/gnome-initial-setup)
-- Flatpaks are not preinstalled (they are/should not be on the container image)
+- Flatpaks are not preinstalled (they are/should not be on the container image) (can be a post-install thing with [flatpak preinstall](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-preinstall))
 - Enrolling secureboot keys
-- some special partitioning like BTRFS subvolumes (see repart.d)
+- some special partitioning like BTRFS subvolumes (see repart.d) directory in this repo
 - kernel arguments see https://bootc.dev/bootc/building/kernel-arguments.html
 
-So anything pretty much that is traditionally done as a "post-install script" on ISOs.
+So anything pretty much that is traditionally done as a "post-install script/in anaconda kickstart files" on ISOs.
 
 ## Preparations
 
