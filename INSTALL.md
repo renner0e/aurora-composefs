@@ -8,15 +8,15 @@
 - `bootc install-to-filesystem` requires knowing how to partition a drive and mount it properly
 - manual user creation on a system with no user (that can be logged into, not even root) is not obvious
 
-## Prerequisites
+## Prerequisites and expectations
 
 - Experience with commandline/bash
 - you read the guide in full to know what you are getting into
+- an image you already built and published on a container registry/in containers-storage
+- a spare disk you can **fully** use (no dual-boot!!!)
 - Existing modern system with rootfull podman and systemd (that you may read this on)
 OR
 - Grab Aurora/Bazzite/CoreOS ISO, anything will do that you are comfortable navigating here
-- an image you already built and published on a container registry/in containers-storage
-- a spare disk you can **fully** use (no dual-boot!!!)
 
 ## Gotchas
 
@@ -28,7 +28,7 @@ A couple examples:
 - Flatpaks are not preinstalled (they are/should not be on the container image) (can be a post-install thing with [flatpak preinstall](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-preinstall))
 - Enrolling secureboot keys
 - some special partitioning like BTRFS subvolumes (see repart.d) directory in this repo
-- kernel arguments see https://bootc.dev/bootc/building/kernel-arguments.html
+- kernel arguments ([which you can bake into your image](https://bootc.dev/bootc/building/kernel-arguments.html))
 
 So anything pretty much that is traditionally done as a "post-install script/in anaconda kickstart files" on ISOs.
 
@@ -155,9 +155,9 @@ mount -t selinuxfs selinuxfs /sys/fs/selinux
 passwd root
 ```
 
-Now boot the system normally without
+Now boot the system normally without doing anything special.
 
-login to root user with your password you set
+login to root user with your password that you set earlier.
 
 Now we actually create the user account
 
