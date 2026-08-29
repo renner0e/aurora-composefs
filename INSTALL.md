@@ -3,7 +3,7 @@
 ## Why does this guide exist
 
 - Avoid dealing with ISO tooling yourself because it's not very good
-- because you don't/can't/wan't to use `bootc switch`
+- because you don't/can't/wan't to install Fedora Silverblue/Bazzite and co first and rebase via `bootc switch`
 - deal with current `bootc install-to-disk` shortcomings (fixed by https://github.com/bootc-dev/bootc/pull/2314)
 - `bootc install-to-filesystem` requires knowing how to partition a drive and mount it properly
 - manual user creation on a system with no user (that can be logged into, not even root) is not obvious
