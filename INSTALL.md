@@ -80,6 +80,7 @@ git clone https://github.com/renner0e/aurora-composefs && cd aurora-composefs
 
 
 Read every repart config, the current default values are
+- 512MB /boot/efi
 - a 2G /boot [same default as Fedora nowadays](https://fedoraproject.org/wiki/Changes/2GbootPartition)
 - root with btrfs with no subvolumes (beware CentOS users!)
 
@@ -87,7 +88,7 @@ Example:
 
 ```
 sdc                                     8:32   1 57.3G  0 disk
-├─sdc1                                  8:33   1    1M  0 part
+├─sdc1                                  8:33   1  512M  0 part
 ├─sdc2                                  8:34   1    2G  0 part
 └─sdc3                                  8:35   1 55.3G  0 part
 ```
@@ -128,8 +129,9 @@ podman run --rm --privileged --pid=host --ipc=host \
 
 ## Unmount
 
+```
 umount -l -R /mnt
-
+```
 
 ## User creation
 
@@ -168,5 +170,3 @@ Give it sudo privileges
 ```
 usermod -aG wheel username
 ```
-
-
