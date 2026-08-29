@@ -10,13 +10,13 @@
 
 ## Prerequisites and expectations
 
-- Experience with commandline/bash
 - you read the guide in full to know what you are getting into
-- an image you already built and published on a container registry/in containers-storage
-- a spare disk you can **fully** use (no dual-boot!!!)
-- Existing modern system with rootfull podman and systemd (that you may read this on)
-OR
-- Grab Aurora/Bazzite/CoreOS ISO, anything will do that you are comfortable navigating here
+- Experience with commandline/bash + dealing with containers/podman
+- an image you already built and published on a container registry/or have in containers-storage
+- a spare disk you can **fully** use (no dual-boot!!!) for the installed target system
+- rootfull podman and systemd (that you may read this on right now)
+
+If you decide to do it over the "liveiso route". You need one USB flash drive for the installation medium, i.e. where you flash Aurora/Bazzite/CoreOS ISO to, anything will do that you are comfortable navigating as long as it has podman and systemd.
 
 ## Gotchas
 
@@ -27,8 +27,8 @@ A couple examples:
 - Creating Users and logging in to the installed system is not handled (solved by plasma-setup/gnome-initial-setup)
 - Flatpaks are not preinstalled (they are/should not be on the container image) (can be a post-install thing with [flatpak preinstall](https://docs.flatpak.org/en/latest/flatpak-command-reference.html#flatpak-preinstall))
 - Enrolling secureboot keys
-- some special partitioning like BTRFS subvolumes (see repart.d) directory in this repo
-- kernel arguments ([which you can bake into your image](https://bootc.dev/bootc/building/kernel-arguments.html))
+- some special partitioning like BTRFS subvolumes (see repart.d) directory in this repo (I guess this can be fixed, I just can't be bothered)
+- kernel arguments ([although you can bake them into your image](https://bootc.dev/bootc/building/kernel-arguments.html))
 
 So anything pretty much that is traditionally done as a "post-install script/in anaconda kickstart files" on ISOs.
 
@@ -38,7 +38,7 @@ All the following commands require root privileges, use `sudo -i` or `run0` to g
 
 ## LiveISO path only
 
-Boot the ISO, setup networking, keyboard layout...
+Boot the ISO, setup networking, keyboard layout..., make yourself comfortable.
 
 Make sure that you have enough free space to pull the container image. If not, and if you have enough RAM, mount a tmpfs:
 
@@ -54,7 +54,7 @@ From here on your target system will be referenced as `$IMAGE`
 For example:
 
 ```
-IMAGE=quay.io/fedora-ostree-desktops/kinoite:44
+IMAGE=quay.io/fedora/fedora-bootc:latest
 ```
 
 ```
@@ -133,7 +133,9 @@ podman run --rm --privileged --pid=host --ipc=host \
 umount -l -R /mnt
 ```
 
-## User creation
+## User creation (you don't have to care about any of this if you have plasma-setup/gnome-initial-setup and so on)
+
+This is essentially 1:1 from [bazzite docs](https://docs.bazzite.gg/Advanced/Reset_Forgotten_User_Password/?h=password#reset-forgotten-user-password)
 
 Hammer into Esc key to get into grub
 
@@ -149,10 +151,18 @@ mount -t selinuxfs selinuxfs /sys/fs/selinux
 /sbin/load_policy
 ```
 
-### Making a root user for initial setup 
+### Making a root user for initial setup
 
 ```
 passwd root
+```
+
+```
+sync
+```
+
+```
+/sbin/reboot -ff
 ```
 
 Now boot the system normally without doing anything special.
