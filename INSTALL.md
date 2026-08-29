@@ -5,6 +5,8 @@
 - Avoid dealing with ISO tooling yourself because it's not very good
 - because you don't/can't/wan't to use `bootc switch`
 - deal with current `bootc install-to-disk` shortcomings (fixed by https://github.com/bootc-dev/bootc/pull/2314)
+- `bootc install-to-filesystem` requires knowing how to partition a drive and mount it properly
+- manual user creation on a system with no user (that can be logged into, not even root) is not obvious
 
 ## Prerequisites
 
@@ -13,7 +15,6 @@
 - Existing modern system with rootfull podman and systemd (that you may read this on)
 OR
 - Grab Aurora/Bazzite/CoreOS ISO, anything will do that you are comfortable navigating here
-
 - an image you already built and published on a container registry/in containers-storage
 - a spare disk you can **fully** use (no dual-boot!!!)
 
@@ -77,7 +78,6 @@ Get repart config files:
 ```
 git clone https://github.com/renner0e/aurora-composefs && cd aurora-composefs
 ```
-
 
 Read every repart config, the current default values are
 - 512MB /boot/efi
