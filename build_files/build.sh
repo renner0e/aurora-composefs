@@ -7,8 +7,11 @@ cp -avf "/ctx/system_files"/. /
 cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
 dnf config-manager setopt keepcache=1 timeout=60
 
+# https://bodhi.fedoraproject.org/updates/FEDORA-2026-52076a635f
 dnf do \
-  --action install -y systemd-boot-unsigned \
+  --action install -y \
+  systemd-boot-unsigned \
+  https://kojipkgs.fedoraproject.org//packages/systemd-boot/261.2/4.fc45/noarch/systemd-boot-x64-261.2-4.fc45.noarch.rpm \
   --action remove -y {kmod-,}v4l2loopback
 
 dnf -y copr enable egoode/dnf-rebuild
@@ -19,6 +22,9 @@ dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf
 dnf -y copr enable rhcontainerbot/bootc
 dnf -y copr disable rhcontainerbot/bootc
 dnf -y swap --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc bootc
+
+# Replace the unsigned built with the signed one
+cp -a /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
