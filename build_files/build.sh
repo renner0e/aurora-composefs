@@ -7,24 +7,27 @@ cp -avf "/ctx/system_files"/. /
 cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
 dnf config-manager setopt keepcache=1 timeout=60
 
-# https://bodhi.fedoraproject.org/updates/FEDORA-2026-52076a635f
-dnf do \
-  --action install -y \
-  systemd-boot-unsigned \
-  https://kojipkgs.fedoraproject.org//packages/systemd-boot/261.2/4.fc45/noarch/systemd-boot-x64-261.2-4.fc45.noarch.rpm \
-  --action remove -y {kmod-,}v4l2loopback
-
 dnf -y copr enable egoode/dnf-rebuild
 dnf -y copr disable egoode/dnf-rebuild
-dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
-dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild 'dnf5-command(manifest)'
-
 dnf -y copr enable rhcontainerbot/bootc
 dnf -y copr disable rhcontainerbot/bootc
-dnf -y swap --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc bootc
+dnf -y copr enable rhcontainerbot/podman-next
+dnf -y copr disable rhcontainerbot/podman-next
 
-# Replace the unsigned built with the signed one
-cp -a /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
+dnf do -y \
+  --action install systemd-boot-unsigned \
+  --action remove {kmod-,}v4l2loopback
+
+dnf do -y \
+  --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc \
+  --action remove bootc
+
+dnf do -y \
+  --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:podman-next podman \
+  --action remove podman
+
+dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
+dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild 'dnf5-command(manifest)'
 
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
