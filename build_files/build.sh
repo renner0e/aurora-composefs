@@ -26,8 +26,9 @@ dnf do -y \
   --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:podman-next podman \
   --action remove podman
 
-dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
-dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild 'dnf5-command(manifest)'
+# busted
+# dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
+# dnf -y install --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild dnf5-plugin-rebuild 'dnf5-command(manifest)'
 
 # https://github.com/ublue-os/aurora/issues/2568
 TMP_OS_RELEASE=$(mktemp --tmpdir 'os-release-XXXXXXXXXX')
