@@ -106,10 +106,11 @@ systemd-repart --empty=force --definitions=repart.d/ostree-grub $DISK --dry-run=
 Example:
 
 ```
-mount /dev/sdc3 /mnt/
+mount /dev/sda3 /mnt
 mkdir -p /mnt/boot
-mount /dev/sdc2 /mnt/boot/
+mount /dev/sda2 /mnt/boot/
 mkdir -p /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
 ```
 
 ## Blast to disk
