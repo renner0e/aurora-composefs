@@ -87,10 +87,10 @@ Read every repart config, the current default values are
 Example:
 
 ```
-sdc                                     8:32   1 57.3G  0 disk
-├─sdc1                                  8:33   1  512M  0 part
-├─sdc2                                  8:34   1    2G  0 part
-└─sdc3                                  8:35   1 55.3G  0 part
+sdc     8:32   1 57.3G  0 disk
+├─sdc1  8:33   1  512M  0 part
+├─sdc2  8:34   1    2G  0 part
+└─sdc3  8:35   1 55.3G  0 part
 ```
 
 Actually partition the disk:
