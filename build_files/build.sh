@@ -7,12 +7,8 @@ cp -avf "/ctx/system_files"/. /
 cp /etc/dnf/dnf.conf /etc/dnf/dnf.conf.bak
 dnf config-manager setopt keepcache=1 timeout=60
 
-dnf -y copr enable egoode/dnf-rebuild
-dnf -y copr disable egoode/dnf-rebuild
 dnf -y copr enable rhcontainerbot/bootc
 dnf -y copr disable rhcontainerbot/bootc
-dnf -y copr enable rhcontainerbot/podman-next
-dnf -y copr disable rhcontainerbot/podman-next
 
 dnf do -y \
   --action install systemd-boot-unsigned \
@@ -21,10 +17,6 @@ dnf do -y \
 dnf do -y \
   --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc \
   --action remove bootc
-
-dnf do -y \
-  --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:podman-next podman \
-  --action remove podman
 
 # busted
 # dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
