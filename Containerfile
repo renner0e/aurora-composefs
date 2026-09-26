@@ -16,8 +16,8 @@ ENV CARGO_HOME=/var/cache/rust \
   CARGO_INCREMENTAL=0
 WORKDIR /home/build
 
-RUN git clone "https://github.com/bootc-dev/bootc.git" .
-# RUN git clone "https://github.com/bootc-dev/bootc.git" . && git checkout bb8fb41e39cbb8c68b6e602307854a57b58f693a
+# RUN git clone "https://github.com/bootc-dev/bootc.git" .
+RUN git clone "https://github.com/bootc-dev/bootc.git" . && git checkout 0a75bc1e0a59794d1ec0d60d865bd9deebcde925
 
 RUN --mount=type=cache,dst=/var/cache/sccache \
   --mount=type=cache,dst=/var/cache/rust/registry \
