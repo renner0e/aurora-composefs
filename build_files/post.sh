@@ -36,3 +36,5 @@ find /run -mindepth 1 \
 
 rm -rf /tmp/*
 mkdir -p /var/tmp
+
+rm -rf /boot/* /boot/.*

@@ -12,11 +12,13 @@ dnf -y copr disable rhcontainerbot/bootc
 
 dnf do -y \
   --action install systemd-boot-unsigned \
-  --action remove {kmod-,}v4l2loopback
+  --action remove {kmod-,}v4l2loopback kmod-xone xone-kmod-common
 
 dnf do -y \
   --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc \
   --action remove bootc
+
+/ctx/kernel.sh
 
 # busted
 # dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change

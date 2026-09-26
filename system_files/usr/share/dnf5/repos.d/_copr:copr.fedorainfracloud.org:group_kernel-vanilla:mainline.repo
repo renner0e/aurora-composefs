@@ -1,0 +1,87 @@
+[copr:copr.fedorainfracloud.org:group_kernel-vanilla:mainline]
+name=Copr repo for mainline owned by @kernel-vanilla
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/mainline/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/mainline/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:stable]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #1 - @kernel-vanilla/stable
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/stable/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/stable/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:longterm-rc]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #2 - @kernel-vanilla/longterm-rc
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/longterm-rc/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/longterm-rc/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:mainline-wo-mergew]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #3 - @kernel-vanilla/mainline-wo-mergew
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/mainline-wo-mergew/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/mainline-wo-mergew/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:fedora]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #4 - @kernel-vanilla/fedora
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:stable-rc]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #5 - @kernel-vanilla/stable-rc
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/stable-rc/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/stable-rc/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:longterm]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #6 - @kernel-vanilla/longterm
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/longterm/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/longterm/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
+
+[coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:fedora-rc]
+name=Copr copr.fedorainfracloud.org/@kernel-vanilla/mainline runtime dependency #7 - @kernel-vanilla/fedora-rc
+baseurl=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora-rc/fedora-$releasever-$basearch/
+type=rpm-md
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://download.copr.fedorainfracloud.org/results/@kernel-vanilla/fedora-rc/pubkey.gpg
+repo_gpgcheck=0
+enabled=0
+enabled_metadata=1
