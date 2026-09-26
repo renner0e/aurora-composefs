@@ -3,6 +3,12 @@ set -eoux pipefail
 
 KERNEL_PKGS_ORIG=(kernel kernel-{core,modules,modules-core,modules-extra})
 
+KERNEL_PKGS=(
+  /tmp/akmods/kernel-[0-9]*.rpm
+  /tmp/akmods/kernel-core-*.rpm
+  /tmp/akmods/kernel-modules-*.rpm
+)
+
 # removing them all at once is slower
 for pkg in "${KERNEL_PKGS_ORIG[@]}"; do
   rpm --erase "${pkg}" --nodeps
@@ -20,9 +26,9 @@ cd /usr/lib/kernel/install.d \
 && printf '%s\n' '#!/bin/sh' 'exit 0' > 50-dracut.install \
 && chmod +x  05-rpmostree.install 50-dracut.install
 
-dnf5 config-manager setopt coprdep:copr.fedorainfracloud.org:group_kernel-vanilla:mainline-wo-mergew.enabled=1
+tree /tmp/akmods
 
-dnf -y install "${KERNEL_PKGS_ORIG[@]}"
+dnf -y install "${KERNEL_PKGS[@]}"
 
 # restore original kernel install
 mv -f 05-rpmostree.install.bak 05-rpmostree.install \

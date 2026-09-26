@@ -34,7 +34,8 @@ find /run -mindepth 1 \
   ! -path '/run/.containerenv' \
   -delete
 
-rm -rf /tmp/*
+find /tmp/* -maxdepth 0 -type d \! -name akmods -exec rm -fr {} \;
+
 mkdir -p /var/tmp
 
 rm -rf /boot/* /boot/.*
