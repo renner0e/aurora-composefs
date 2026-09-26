@@ -11,7 +11,7 @@ dnf do -y \
   --action install systemd-boot-unsigned \
   --action remove {kmod-,}v4l2loopback kmod-xone xone-kmod-common
 
-/ctx/kernel.sh
+# /ctx/kernel.sh
 
 # busted
 # dnf -y distro-sync --from-repo copr:copr.fedorainfracloud.org:egoode:dnf-rebuild '*' --allow-vendor-change
