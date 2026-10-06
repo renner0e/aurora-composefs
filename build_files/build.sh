@@ -16,9 +16,7 @@ dnf do -y \
 
 # /ctx/kernel.sh
 
-dnf do -y \
-  --action install --from-repo copr:copr.fedorainfracloud.org:rhcontainerbot:bootc bootc \
-  --action remove bootc
+# /ctx/bootc-git.sh
 
 cp -a /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 
