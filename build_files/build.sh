@@ -16,7 +16,7 @@ dnf do -y \
 
 # /ctx/kernel.sh
 
-# /ctx/bootc-git.sh
+/ctx/bootc-git.sh
 
 cp -a /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 
