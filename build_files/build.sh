@@ -18,6 +18,8 @@ dnf do -y \
 
 /ctx/bootc-git.sh
 
+/ctx/initramfs.sh
+
 cp -a /usr/lib/systemd/boot/efi/systemd-bootx64.efi{.signed,}
 
 /ctx/post.sh
