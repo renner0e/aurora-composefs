@@ -2,7 +2,7 @@ FROM scratch AS ctx
 COPY build_files /
 COPY system_files /system_files
 
-FROM ghcr.io/ublue-os/aurora:testing
+FROM ghcr.io/ublue-os/aurora:testing-kde-nightly
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache/libdnf5 \
